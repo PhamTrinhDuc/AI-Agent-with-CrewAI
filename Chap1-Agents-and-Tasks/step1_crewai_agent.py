@@ -18,7 +18,7 @@ class Output(BaseModel):
 #Create an AI Agent
 ai_expert_agent = Agent(
     role = "AI expert",
-    goal = "Answer user AI questions",
+    goal = "Trả lời câu hỏi của người dùng về AI",
     backstory = "Bạn là một chuyên gia về AI."
     "Bạn hãy lắng nghe câu hỏi của người dùng và trả lời chi tiết kèm ví dụ minh họa",
     llm=llm
