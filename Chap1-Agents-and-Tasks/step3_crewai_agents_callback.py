@@ -1,11 +1,23 @@
-import json 
+import json
 import os
 from langchain_openai import ChatOpenAI
-from crewai import Agent, Task, Crew
+from crewai import Agent, Crew, Task
+from crewai.tasks.task_output import TaskOutput
 from pydantic import BaseModel
-from typing import Union
 from dotenv import load_dotenv
+
 load_dotenv()
+
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=1.2)
+
+def callback_func(output: TaskOutput):
+    # Do something after the task is completed
+    # Example: Send an email to the manager
+    print(f"""
+        Task completed !
+        Task: {output.description}
+        Output: {output.raw}
+    """)
 
 
 llm = ChatOpenAI(model="gpt-4o-mini")
@@ -39,7 +51,8 @@ keywork_task  = Task(
     description="Đưa ra những keyword qua trọng về chủ đề Machine learning",
     expected_output="Một danh sách các từ khóa quan trọng về Machine Learning",
     agent=agent_research,
-    output_json=StructuredOutput
+    output_json=StructuredOutput,
+    callback=callback_func,
 )
 
 # Define task Create Blog Outline
@@ -48,7 +61,8 @@ outline_task = Task(
     description="Đưa ra dàn ý phù hợp cho bài viết về chủ đề Machine Learning",
     agent=agent_research,
     expected_output="Một mô tả chi tiết về bài viết",
-    output_json=StructuredOutput
+    output_json=StructuredOutput,
+    callback=callback_func
 )
 
 # Define Task Write Blog Content
@@ -58,7 +72,8 @@ write_task = Task(
     expected_output="Một bài viết chất lượng khoảng 200 từ",
     agent=agent_blog, 
     context=[keywork_task, outline_task],
-    output_json=StructuredOutput
+    output_json=StructuredOutput,
+    callback=callback_func
 )
 
 # Define Crew
