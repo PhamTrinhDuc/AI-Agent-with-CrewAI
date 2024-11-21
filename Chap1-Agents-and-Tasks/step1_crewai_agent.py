@@ -10,11 +10,7 @@ load_dotenv()
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=1.2)
 
 # Define output structure
-class Output1(BaseModel):
-    explain: str
-    example: str
-
-class Output2(BaseModel):
+class Output(BaseModel):
     explain: str
     example: str
     keyword: str
@@ -34,7 +30,7 @@ task = Task(
     expected_output="Một câu trả lời phù hợp với câu hỏi của người" 
     "lưu ý đưa ra ví dụ minh họa rõ ràng cho sự giải thích của mình",
     agent=ai_expert_agent,
-    output_json=Output2
+    output_json=Output
 )
 # Initialize the Crew
 crew = Crew(
