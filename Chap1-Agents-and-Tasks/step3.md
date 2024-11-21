@@ -145,8 +145,3 @@ print(result)
 5. **Final Output**: Includes the list of keywords, the blog outline, and the complete blog post.
 
 This modular design enables efficient task management, dependency resolution, and extensible workflows.
-
-6. **Example**:
-    - I want to learn AI
-        - Yes
-    - Im sorry
